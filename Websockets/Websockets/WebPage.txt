@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ESP32 WebSocket Client</title>
+</head>
+<body>
+<h2>ESP32 WebSocket Test</h2>
+<button onclick="connect()">Connect</button>
+
+<button onclick="disconnect()">Disconnect</button>
+<br><br>
+<input type="text" id="messageInput" placeholder="Enter message">
+<button onclick="sendMessage()">Send to ESP32</button>
+<h3>Messages:</h3>
+<div id="output" style="height: 200px; width: 400px; border: 1px solid black; overflow-y: scroll;
+padding: 5px;"></div>
+<script>
+// CHANGE THIS TO YOUR ESP32 IP ADDRESS
+var wsUri = "ws://192.168.1.50:81/";
+var websocket;
+function connect() {
+websocket = new WebSocket(wsUri);
+websocket.onopen = function(evt) { logMessage("CONNECTED"); };
+websocket.onclose = function(evt) { logMessage("DISCONNECTED"); };
+websocket.onmessage = function(evt) {
+logMessage('<span style="color: blue;">RECEIVED: ' + evt.data + '</span>');
+};
+websocket.onerror = function(evt) { logMessage('<span style="color: red;">ERROR: ' +
+evt.data + '</span>'); };
+}
+function disconnect() {
+if (websocket) websocket.close();
+}
+function sendMessage() {
+var msg = document.getElementById("messageInput").value;
+if (websocket && websocket.readyState === WebSocket.OPEN) {
+websocket.send(msg);
+logMessage("SENT: " + msg);
+} else {
+logMessage('<span style="color: red;">Error: Not connected</span>');
+}
+}
+function logMessage(message) {
+
+var outputDiv = document.getElementById("output");
+outputDiv.innerHTML += message + "<br>";
+outputDiv.scrollTop = outputDiv.scrollHeight; // Auto-scroll
+}
+</script>
+</body>
+</html>
