@@ -229,6 +229,3 @@ All sketches in this repository use a default baud rate of **`115200`**. Set the
 
 This project is open-source software made available under the OpenGPL
 
-```
-
-```
