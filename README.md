@@ -1,4 +1,3 @@
-```markdown
 # ESP32 Wireless Communication Protocols & Master Tutorials
 
 [![Platform](https://img.shields.io/badge/Platform-ESP32-blue.svg)](https://www.espressif.com/en/products/socs/esp32)
